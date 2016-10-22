@@ -1,0 +1,10 @@
+AllTests
+dfinder
+*.pyc
+*.bam
+*.o
+*~
+result*
+output
+CMakeLists.txt.user
+build/
