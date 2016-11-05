@@ -53,7 +53,8 @@ AbstractClip *ClipReader::nextClip() {
                                         genomePositions[0] + 1,
                                         al.MatePosition + 1,
                                         al.QueryBases,
-                                        al.CigarData);
+                                        al.CigarData,
+                                        al.GetEndPosition());
             }
             if (al.IsReverseStrand() && al.Position != genomePositions[size - 1] &&
                     clipSizes[size - 1] >= allowedNum &&
@@ -64,7 +65,8 @@ AbstractClip *ClipReader::nextClip() {
                                         genomePositions[size - 1] + 1,
                                         al.MatePosition + 1,
                                         al.QueryBases,
-                                        al.CigarData);
+                                        al.CigarData,
+                                        genomePositions[size - 1]);
             }
         }
 
@@ -79,7 +81,8 @@ AbstractClip *ClipReader::nextClip() {
                                         genomePositions[size - 1] + 1,
                                         al.MatePosition + 1,
                                         al.QueryBases,
-                                        al.CigarData);
+                                        al.CigarData,
+                                        genomePositions[size - 1]);
             }
             if ((al.AlignmentFlag == 81 || al.AlignmentFlag == 145) && al.Position > al.MatePosition &&
                     clipSizes[0] >= allowedNum &&
@@ -89,7 +92,8 @@ AbstractClip *ClipReader::nextClip() {
                                         genomePositions[0] + 1,
                                         al.MatePosition + 1,
                                         al.QueryBases,
-                                        al.CigarData);
+                                        al.CigarData,
+                                        al.GetEndPosition());
             }
         }
 

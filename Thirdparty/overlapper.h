@@ -137,10 +137,11 @@ struct OverlapperParams
     int mismatch_penalty;
 };
 
-struct ScoreParam
+// rename ScoreParam to ScoreParam2 because of naming confliction
+struct ScoreParam2
 {
 
-    ScoreParam(int match, int mismatch, int gap, int gap_start = 0) :
+    ScoreParam2(int match, int mismatch, int gap, int gap_start = 0) :
         match(match), mismatch(mismatch), gap(gap), gap_start(gap_start) {
 
     }
@@ -176,8 +177,8 @@ SequenceOverlap alignPrefix(const std::string& s1, const std::string& s2, const 
 
 SequenceOverlap computeOverlapSW2(const std::string& s1, const std::string& s2, int minOverlap, double minIdentity, const OverlapperParams params = default_params);
 
-SequenceOverlap ageAlignPrefix(const std::string& s1, const std::string& s2, const ScoreParam& score_param);
-SequenceOverlap ageAlignSuffix(const std::string& s1, const std::string& s2, const ScoreParam& score_param);
+SequenceOverlap ageAlignPrefix(const std::string& s1, const std::string& s2, const ScoreParam2& score_param);
+SequenceOverlap ageAlignSuffix(const std::string& s1, const std::string& s2, const ScoreParam2& score_param);
 
 // Extend a match between s1 and s2 into a full overlap using banded dynamic programming.
 // start_1/start_2 give the starting positions of the current partial alignment. These coordinates

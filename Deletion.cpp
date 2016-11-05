@@ -28,7 +28,7 @@ Deletion::~Deletion() {
 string Deletion::toBedpe() const {
     stringstream fmt;
     fmt << referenceName << "\t" << start1 - 1 << "\t" << end1 << "\t"
-              << referenceName << "\t" << start2 - 1 << "\t" << end2;
+              << referenceName << "\t" << start2 - 1 << "\t" << end2 << "\t" << length;
     return fmt.str();
 }
 
@@ -65,7 +65,6 @@ std::ostream& operator <<(ostream &stream, const Deletion &del)
 
 bool Deletion::checkRep() const
 {
-    return (start1 <= end1) &&
-            (start2 <= end2) &&
+    return (start1 < start2) &&
             (length <= Helper::SVLEN_THRESHOLD);
 }

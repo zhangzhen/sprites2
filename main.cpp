@@ -17,6 +17,9 @@
 #include "Thirdparty/Timer.h"
 
 #include "easylogging++.h"
+#include "HTSlibSequenceFetcher.h"
+#include "AGERealignWholeReadCaller.h"
+#include "AGEAlignerAdapter.h"
 
 //
 // Getopt
@@ -148,6 +151,10 @@ int main(int argc, char *argv[]) {
     int insLength = opt::insertMean + 3 * opt::insertSd;
     double identityRate = 1.0f - opt::errorRate;
 
+	ISequenceFetcher *pSeqFetcher = new HTSlibSequenceFetcher(faidx.GetFasta());
+
+	IRealignmentCaller *pRealnCaller = new AGERealignWholeReadCaller(new AGEAlignerAdapter(), pSeqFetcher);
+
     std::vector<Deletion> deletions;
 
 //    Timer* pTimer = new Timer("Preprocessing split reads");
@@ -157,7 +164,7 @@ int main(int argc, char *argv[]) {
     while ((pClip = creader.nextClip())) {
 //        clips.push_back(pClip);
         try {
-            auto del = pClip->call(bamReader, faidx, insLength, opt::minOverlap, identityRate, opt::minMapQual);
+            auto del = pClip->call(bamReader, faidx, insLength, opt::minOverlap, identityRate, opt::minMapQual, pRealnCaller);
             deletions.push_back(del);
         } catch (ErrorException& ex) {
     //            std::cout << ex.getMessage() << std::endl;

@@ -1189,7 +1189,7 @@ std::string Overlapper::compactCigar(const std::string& ecigar)
 }
 
 
-SequenceOverlap Overlapper::ageAlignPrefix(const std::string &s1, const std::string &s2, const ScoreParam &score_param)
+SequenceOverlap Overlapper::ageAlignPrefix(const std::string &s1, const std::string &s2, const ScoreParam2 &score_param)
 {
     SequenceOverlap output;
 
@@ -1385,7 +1385,7 @@ theEnd:
 }
 
 
-SequenceOverlap Overlapper::ageAlignSuffix(const std::string &s1, const std::string &s2, const ScoreParam &score_param)
+SequenceOverlap Overlapper::ageAlignSuffix(const std::string &s1, const std::string &s2, const ScoreParam2 &score_param)
 {
     std::string s1_r = s1;
     std::reverse(s1_r.begin(), s1_r.end());

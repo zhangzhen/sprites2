@@ -5,6 +5,7 @@
 using namespace std;
 
 FaidxWrapper::FaidxWrapper(const std::string &fasta)
+    : fasta(fasta)
 {
     fai = fai_load(fasta.c_str());
     if (fai == NULL) error("Cannot load the indexed fasta.");
