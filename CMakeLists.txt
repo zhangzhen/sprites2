@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(sprites)
+project(sprites_age)
 
 include_directories($ENV{BAMTOOLS_HOME}/include $ENV{HTSLIB_HOME})
 #link_directories($ENV{BAMTOOLS_HOME}/lib $ENV{HTSLIB_HOME})

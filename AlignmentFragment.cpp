@@ -5,6 +5,8 @@
 
 int AlignmentFragment::NumOfIdenticalBases() const
 {
+	//std::cout << alignedS1 << std::endl;
+	//std::cout << alignedS2 << std::endl;
     return NumOfIdenticalChars(alignedS1, alignedS2);
 }
 

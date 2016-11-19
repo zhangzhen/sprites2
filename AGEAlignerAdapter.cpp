@@ -21,6 +21,7 @@ IAlignmentResult *AGEAlignerAdapter::Align(const std::string &v, const std::stri
 
     AliFragment *f = aligner.GetAliFragments();
 
+	assert(f->start1() <= f->end1() && f->start2() <= f->end2());
     AlignmentFragment aFragment1(f->ali1(),
                                  f->ali2(),
                                  Interval(f->start1() - 1, f->end1() - 1),
@@ -28,7 +29,8 @@ IAlignmentResult *AGEAlignerAdapter::Align(const std::string &v, const std::stri
 
     if (!(f=f->next())) return NULL;
 
-    AlignmentFragment aFragment2(f->ali1(),
+	assert(f->start1() <= f->end1() && f->start2() <= f->end2());
+	AlignmentFragment aFragment2(f->ali1(),
                                  f->ali2(),
                                  Interval(f->start1() - 1, f->end1() - 1),
                                  Interval(f->start2() - 1, f->end2() - 1));

@@ -146,11 +146,20 @@ CallResult *FiveEndReverseSCRead::ToCallResult(int refStartPos, DoubleFragsAlnRe
 
     if (n_bases > 0)
     {
-        std::string v1 = v.substr(f1_e_v + 1, n_bases);
-        std::string w = pAlnResult->WBasesBetweenTwoFrags();
-        int n_mismatch1 = n_bases - NumOfIdenticalChars(v1, w);
+		std::string v1 = v.substr(f1_e_v + 1, n_bases);
+		if (v1.length() < n_bases)
+		{
+			return NULL;
+		}
+		std::string w = pAlnResult->WBasesBetweenTwoFrags();
+		assert(n_bases == w.length());
+		int n_mismatch1 = n_bases - NumOfIdenticalChars(v1, w);
 
-        std::string v2 = v.substr(f2_s_v - n_bases, n_bases);
+		if (f2_s_v < n_bases)
+		{
+			return NULL;
+		}
+		std::string v2 = v.substr(f2_s_v - n_bases, n_bases);
         int n_mismatch2 = n_bases - NumOfIdenticalChars(v2, w);
 
         if (n_mismatch1 <= 1)
@@ -199,7 +208,6 @@ CallResult *FiveEndReverseSCRead::ToCallResult(int refStartPos, DoubleFragsAlnRe
     std::string micro_hom_l = v.substr(f1_e_v - nl, nl);
 
     cInterval = cInterval.merge(Interval(-nl, nr));
-
 
     return new CallResult(ChromosomeRegion(GetReferenceId(),
                                        GetReferenceName(),

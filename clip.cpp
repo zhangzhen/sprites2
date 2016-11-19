@@ -109,11 +109,12 @@ Deletion ForwardBClip::call(FaidxWrapper &faidx, const std::vector<TargetRegion>
 	double minIdentity, IRealignmentCaller *pRealnCaller)
 {
 //    error("No deletion is found.");
-    if (regions.empty())
+    if (regions.empty() || mapPosition >= endPosition)
     {
         error("No deletion is found.");
     }
 
+	//std::cout << mapPosition << "\t" << endPosition << std::endl;
     ChromosomeRegion alignedRegion(referenceId, regions[0].referenceName, mapPosition, endPosition);
     FiveEndForwardSCRead read("NA", alignedRegion, sequence, 30, cigar[0].Length, 0, 0);
 
@@ -124,7 +125,7 @@ Deletion ForwardBClip::call(FaidxWrapper &faidx, const std::vector<TargetRegion>
         TargetRegion reg = *it;
 
         CallResult *pCallRes;
-
+		//std::cout << reg.start << "\t" << reg.end << std::endl;
         ChromosomeRegion cRegion = ChromosomeRegion(referenceId, reg.referenceName, reg.start, reg.end);
 
         if((pCallRes = pRealnCaller->Call(&read, cRegion, cParams)) && pCallRes->IsValid(Helper::SVLEN_THRESHOLD))
@@ -347,7 +348,10 @@ Deletion ReverseEClip::call(FaidxWrapper &faidx, const std::vector<TargetRegion>
 Deletion ReverseEClip::call(FaidxWrapper &faidx, const std::vector<TargetRegion> &regions, int minOverlap,
 	double minIdentity, IRealignmentCaller *pRealnCaller)
 {
-//    error("No deletion is found.");
+	if (regions.empty() || mapPosition >= endPosition)
+	{
+		error("No deletion is found.");
+	}
 
 	ChromosomeRegion alignedRegion(referenceId, regions[0].referenceName, mapPosition, endPosition);
 	FiveEndReverseSCRead read("NA", alignedRegion, sequence, 30, cigar[cigar.size() - 1].Length, 0, 0);

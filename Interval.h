@@ -11,6 +11,7 @@ public:
         : start(start),
           end(end)
     {
+		//std::cout << start << "\t" << end << std::endl;
         CheckRep();
     }
 
@@ -24,7 +25,7 @@ public:
 
     void SetStart(int newStart)
     {
-        assert(newStart <= end);
+		assert(newStart <= end);
         start = newStart;
     }
     void SetEnd(int newEnd)
