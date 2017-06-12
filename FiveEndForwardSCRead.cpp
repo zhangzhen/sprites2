@@ -138,8 +138,14 @@ CallResult *FiveEndForwardSCRead::ToCallResult(int refStartPos, DoubleFragsAlnRe
     std::string microIns = "";
 
     int n_bases = pAlnResult->NumOfWBasesBetweenTwoFrags();
+	if (n_bases >= pAlnResult->NumOfVBasesBetweenTwoFrags())
+	{
+		return NULL;
+	}
 
     std::string v = pAlnResult->GetV();
+	std::cout << ">>>>>>>>>>>>> " << GetType() << std::endl;
+	std::cout << "v.length(): " << v.length() << std::endl;
 
     if (n_bases > 0)
     {
@@ -147,9 +153,11 @@ CallResult *FiveEndForwardSCRead::ToCallResult(int refStartPos, DoubleFragsAlnRe
 		{
 			return NULL;
 		}
+		std::cout << "f2_s_v - n_bases: " << f2_s_v - n_bases << std::endl;
         std::string v1 = v.substr(f2_s_v - n_bases, n_bases);
         std::string w = pAlnResult->WBasesBetweenTwoFrags();
 		int n_mismatch1 = n_bases - NumOfIdenticalChars(v1, w);
+		std::cout << "f1_e_v + 1: " << f1_e_v + 1 << std::endl;
         std::string v2 = v.substr(f1_e_v + 1, n_bases);
 		if (v2.length() < n_bases)
 		{
@@ -184,17 +192,20 @@ CallResult *FiveEndForwardSCRead::ToCallResult(int refStartPos, DoubleFragsAlnRe
     {
         return NULL;
     }
-
+	std::cout << "f2_s_v: " << f2_s_v << std::endl;
     std::string s1 = v.substr(f2_s_v);
+	std::cout << "f1_e_v + 1: " << f1_e_v + 1 << std::endl;
     std::string t1 = v.substr(f1_e_v + 1, s1.length());
 
     int nr = NumOfLongestCommonPrefix(s1, t1);
     std::string micro_hom_r = v.substr(f2_s_v, nr);
 
     std::string s2 = v.substr(0, f1_e_v);
+	std::cout << "f2_s_v - s2.length(): " << f1_e_v + 1 << std::endl;
     std::string t2 = v.substr(f2_s_v - s2.length(), s2.length());
 
     int nl = NumOfLongestCommonSuffix(s2, t2);
+	std::cout << "f1_e_v - nl: " << f1_e_v - nl << std::endl;
     std::string micro_hom_l = v.substr(f1_e_v - nl, nl);
 	//std::cout << -nl << "\t" << nr << std::endl;
     cInterval = cInterval.merge(Interval(-nl, nr));

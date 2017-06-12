@@ -81,6 +81,11 @@ public:
         return GetAlnFrag2StartW() - GetAlnFrag1EndW() - 1;
     }
 
+	int NumOfVBasesBetweenTwoFrags() const
+	{
+		return GetAlnFrag2StartV() - GetAlnFrag1EndV() - 1;
+	}
+
     std::string WBasesBetweenTwoFrags() const
     {
         return WBasesBetweenTwoFragsExtLeft(0);
